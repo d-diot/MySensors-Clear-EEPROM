@@ -1,0 +1,1 @@
+This is a modified version of the MySensors-Clear-EEPROM.ino sketch to work with platformio.
