@@ -27,6 +27,7 @@
  */
 // load core modules only
 #define MY_CORE_ONLY
+#define MY_BAUD_RATE (9600ul)
 
 #include <MySensors.h>
 
