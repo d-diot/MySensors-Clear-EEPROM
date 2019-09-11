@@ -51,7 +51,7 @@ void loop()
       Serial.print("pos: ");
       Serial.println(i);
       hwWriteConfig(i, 0xFF);
-      delay(50);
+      delay(100);
       Serial.flush();
       wdt_reset();
     }
