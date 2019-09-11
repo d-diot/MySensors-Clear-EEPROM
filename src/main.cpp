@@ -25,24 +25,37 @@
  * This sketch clears radioId, relayId and other routing information in EEPROM back to factory default
  *
  */
+
 // load core modules only
+
 #define MY_CORE_ONLY
-#define MY_BAUD_RATE (9600ul)
+#define MY_BAUD_RATE 9600
+bool first_run = true;
 
 #include <MySensors.h>
 
 void setup()
 {
   Serial.begin(MY_BAUD_RATE);
-  Serial.println("Started clearing. Please wait...");
-  for (uint16_t i = 0; i < EEPROM_LOCAL_CONFIG_ADDRESS; i++)
-  {
-    hwWriteConfig(i, 0xFF);
-  }
-  Serial.println("Clearing done.");
+  wdt_reset();
 }
 
 void loop()
 {
-  // Nothing to do here...
+  if (first_run)
+  {
+    wdt_reset();
+    Serial.println("Started clearing. Please wait...");
+    for (uint16_t i = 0; i < EEPROM_LOCAL_CONFIG_ADDRESS; i++)
+    {
+      Serial.print("pos: ");
+      Serial.println(i);
+      hwWriteConfig(i, 0xFF);
+      delay(50);
+      Serial.flush();
+      wdt_reset();
+    }
+    Serial.println("Clearing done.");
+  }
+  first_run = false;
 }
